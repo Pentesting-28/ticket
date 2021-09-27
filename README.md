@@ -1,3 +1,54 @@
+<h3>Ticket de atención al cliente basado en Laravel 8.</h3>
+
+versión: composer 2
+versión: php 7.4.15
+
+Ejecute en su terminal 
+
+
+    git clone https://github.com/Pentesting-28/ticket.git
+
+    cd nombre_del_proyecto
+
+    composer install
+
+Si no se crea el .env automáticamente ejecute:
+
+    cp .env.example .env
+
+    php artisan key:generate
+
+Cree la conexión a su base de datos.
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=laravel
+    DB_USERNAME=root
+    DB_PASSWORD=
+
+Ejecute los comando:
+
+    php artisan config:cache
+    php artisan optimize:clear
+    
+Ejecute las migraciones 
+
+    php artisan migrate
+    php artisan db:seed
+
+Inicie sesión con las siguientes credenciales:
+
+correo:
+
+    super_admin@admin.com
+    
+contraseña:
+
+    secret
+
+DISFRUTE LA EXPERIENCIA * : *
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
