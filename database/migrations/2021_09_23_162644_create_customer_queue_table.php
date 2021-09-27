@@ -15,13 +15,14 @@ class CreateCustomerQueueTable extends Migration
     {
         Schema::create('customer_queue', function (Blueprint $table) {
             $table->id();
+            
             $table->foreignId('customer_id')->constrained()
-                                        ->onUpdate('cascade')
-                                        ->onDelete('cascade');
+                                            ->onUpdate('cascade')
+                                            ->onDelete('cascade');
 
             $table->foreignId('queue_id')->constrained()
-                                        ->onUpdate('cascade')
-                                        ->onDelete('cascade');
+                                         ->onUpdate('cascade')
+                                         ->onDelete('cascade');
             $table->timestamps();
         });
     }

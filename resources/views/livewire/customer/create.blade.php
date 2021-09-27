@@ -12,7 +12,7 @@
                 <form>
                     <div class="col-md-12">
                       <label for="validationCustom01">Nombre</label>
-                      <input wire:model="name" type="text" name="name" class="form-control" id="validationCustom01" required placeholder="Nombre del cliente">
+                      <input wire:model.defer="name" type="text" name="name" class="form-control" id="validationCustom01" required placeholder="Nombre del cliente">
                       @error('name') <span class="error text-danger">{{ $message }}</span>@enderror
                     </div>
                 </form>

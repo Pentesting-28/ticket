@@ -1,88 +1,99 @@
-<div class="container">
+<div class="container" wire:poll.2s><!--Sondeo para renderizar el componente cada 5 segundos-->
     <br>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        @if(count($customers_queue) > 0)
+            @foreach ($customers_queue as $queues)
+              {{-- expr --}}
+                  @if ($queues->queue[0]->id == 1)
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-success text-white mb-4">
+                        <div class="card-body">{{ $queues->name }}</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#">Cola 1</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                  @else
+                    <div class="col-xl-3 col-md-6">
+                        <div class="card bg-danger text-white mb-4">
+                            <div class="card-body">{{ $queues->name }}</div>
+                            <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="#">Cola 2</a>
+                                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                  @endif
+            @endforeach
+        @else
+        <div class="card mb-4"style="background: #6c63ff;" >
+            <div class="card-body text-white">
+                No tiene clientes en cola.
+            </div>
+        </div>
+        @endif
+      </div>
+        
+    </div>
+
+
     <div class="card mb-4">
         <div class="card-body">
-        {{-- @include('livewire.user.modal') --}}
+        @include('livewire.customer.modal')
         @include('livewire.customer.create')
-        {{-- @include('livewire.user.edit') --}}
         <div class="row align-items-end">
             <div class="col-lg-6 col-md-6">
                 <h4>Listado de Clientes</h4>
-                <span>Todos los clientes registrados en el sistema</span>
+                <span>Todos los clientes registrados en el sistema.</span>
             </div>
             <div class="col-lg-6 col-md-6">
-                {{-- <div class="btn-toolbar justify-content-between float-right" role="toolbar" aria-label="Toolbar with button groups">
-                  <div class="input-group">
-                    <div class="input-group-prepend"> --}}
-                          {{-- <input title="Buscar por Nombre" wire:model="filter.user_name" type="text" class="form-control mx-1" name="keyWord" id="keyWord" placeholder="Nombre">
-                          <input title="Buscar por Email" wire:model="filter.user_email" type="text" class="form-control mx-1" name="keyWord" id="keyWord" placeholder="Email">
-                          <input title="Buscar por Roles" wire:model="filter.user_name_roles" type="text" class="form-control mx-1" name="keyWord" id="keyWord" placeholder="Roles"> --}}
-                          {{-- @can('create', Auth::user()) --}}
-                            <a title="Registrar Usuario" data-toggle="modal" data-target="#createModal" class="btn btn-secondary text-white float-right" style="background: #6c63ff;">Registrar cliente</a>
-                          {{-- @endcan --}}
-                    {{-- </div>
-                  </div>
-                </div> --}}
+                  <a title="Registrar Usuario" data-toggle="modal" data-target="#createModal" class="btn btn-secondary text-white float-right" style="background: #6c63ff;">Registrar cliente</a>
             </div>
         </div> <br><br>
             <div class="table-responsive">
                 <table class="table" width="100%" cellspacing="0">
                     {{-- id="dataTable" --}}
-                      <thead>
+                      <thead class="text-center">
                         <tr>
                           <th scope="col">Id</th>
                           <th >Nombre</th>
-                          <th >Apellido</th>
-                          <th >Email</th>
-                          <th >Rol</th>
-                          {{-- @can('create', Auth::user())
-                          <th class="text-center">Accición</th>
-                          @endcan --}}
+                          <th >Status</th>
+                          <th >Cola</th>
+                          <th >Tiempo</th>
+                          <th >Accición</th>
                         </tr>
                       </thead>
-                      {{-- @foreach($users as $user) --}}
-                      <tbody>
+                      @foreach($customers as $customer)
+                      <tbody class="text-center">
                         <tr>
-                          {{-- <th>{{ $user->id }}</th>
-                          <td>{{ $user->name }}</td>
-                          <td>{{ $user->last_name }}</td>
-                          <td>{{ $user->email }}</td> --}}
-                          {{-- @if(!empty($user->roles[0]))
-                              <td><label><em><b>{{ $user->roles[0]->name }}.</b></em></label></td>
+                          <th>{{ $customer->id }}</th>
+                          <td>{{ $customer->name }}</td>
+                          @if($customer->status == true)
+                              <td style="background-color: #28a745; color: white;"><label><em><b>Atendido.</b></em></label></td>
                           @else
-                              <td><label><em><b>No aplica.</b></em></label></td>
-                          @endif --}}
-                          <td class="text-center">
+                              <td style="background-color: #dc3545; color: white;"><label><em><b>En proceso.</b></em></label></td>
+                          @endif
+                          <td><label><em><b>{{ $customer->queue[0]->name }}.</b></em></label></td>
+                          <td><label><em><b>{{ $customer->queue[0]->time }} Min.</b></em></label></td>
 
-
-                            {{-- @can('update', Auth::user())
-                                <a title="Editar Usuario" data-toggle="modal" data-target="#updateModal" wire:click="modal('edit',{{ $user->id }})">
-                                    <button class="btn pt-0" style="background: white;"><i class="fas fa-edit" style="font-size: 20px;"></i></button>
-                                </a>
-                            @endcan --}}
-    {{--
-                            @can('delete', Auth::user())
-                                <button title="Eliminar Usuario" type="button" class="btn pt-0" data-toggle="modal" data-target="#destroyModal" wire:click="modal('destroy',{{ $user->id }})"
-                                        class="btn btn-danger text-white mr-2 text-capitalize"
-                                        style="background: white">
-                                        <i class="fas fa-trash-alt" style="font-size: 20px; color: red"></i>
-                                </button>
-                            @endcan --}}
-
+                          <td>
+                              <button title="Eliminar cliente" type="button" data-toggle="modal" data-target="#destroyModal" wire:click="modal({{ $customer->id }})" class="btn btn-danger text-white mr-2 text-capitalize" >Eliminar</button>
                           </td>
                         </tr>
                       </tbody>
-                      {{-- @endforeach --}}
+                      @endforeach
                 </table>
-                {{-- {{ $users->links() }} --}}
+                {{ $customers->links() }}
             </div>
         </div>
     </div>
-    {{--             @if($users->count() == 0)
-        <div class="card">
-            <div class="card-body">
-                No tiene usuarios registrados.
-            </div>
-        </div>
-    @endif --}}
+                @if($customers->count() == 0)
+                    <div class="card">
+                        <div class="card-body">
+                            No tiene clientes registrados.
+                        </div>
+                    </div>
+                @endif
 </div>

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Livewire\Customer\Index as IndexCustomer;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
